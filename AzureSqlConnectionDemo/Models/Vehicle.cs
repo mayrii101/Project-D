@@ -12,4 +12,5 @@ public class Vehicle
     public VehicleType Type { get; set; }
 
     public VehicleStatus Status { get; set; }
+    public bool IsDeleted { get; set; }
 }

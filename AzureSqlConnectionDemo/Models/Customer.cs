@@ -17,4 +17,5 @@ public class Customer
     public string TelefoonNummer { get; set; } = string.Empty;
 
     public string Adres { get; set; } = string.Empty;
+    public bool IsDeleted { get; set; }
 }

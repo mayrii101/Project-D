@@ -22,4 +22,5 @@ public class Product
     public string Category { get; set; } = string.Empty;
 
     public DateTime? ExpirationDate { get; set; }
+    public bool IsDeleted { get; set; }
 }

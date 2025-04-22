@@ -20,4 +20,5 @@ public class OrderLine
 
     [NotMapped]
     public double LineTotal => Product.Price * Quantity;
+    public bool IsDeleted { get; set; }
 }

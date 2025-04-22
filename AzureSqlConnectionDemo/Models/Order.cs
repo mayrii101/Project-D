@@ -26,4 +26,6 @@ public class Order
     public DateTime ExpectedDeliveryDate { get; set; }
 
     public DateTime? ActualDeliveryDate { get; set; }
+
+    public bool IsDeleted { get; set; }
 }

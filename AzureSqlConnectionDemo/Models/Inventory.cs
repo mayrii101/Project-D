@@ -21,4 +21,5 @@ public class Inventory
     public int QuantityOnHand { get; set; }
 
     public DateTime LastUpdated { get; set; }
+    public bool IsDeleted { get; set; }
 }

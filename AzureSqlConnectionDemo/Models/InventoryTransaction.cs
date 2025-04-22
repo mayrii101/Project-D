@@ -25,4 +25,5 @@ public class InventoryTransaction
     public Employee Employee { get; set; } = default!;
 
     public string SourceOrDestination { get; set; } = string.Empty;
+    public bool IsDeleted { get; set; }
 }

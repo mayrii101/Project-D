@@ -12,4 +12,5 @@ public class Warehouse
     public string ContactPerson { get; set; } = string.Empty;
 
     public string Phone { get; set; } = string.Empty;
+    public bool IsDeleted { get; set; }
 }
