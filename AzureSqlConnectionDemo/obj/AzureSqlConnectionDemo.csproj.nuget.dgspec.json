@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj": {}
+    "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj": {}
   },
   "projects": {
-    "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj": {
+    "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj",
+        "projectUniqueName": "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj",
         "projectName": "AzureSqlConnectionDemo",
-        "projectPath": "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj",
+        "projectPath": "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj",
         "packagesPath": "/Users/jamayra/.nuget/packages/",
-        "outputPath": "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/obj/",
+        "outputPath": "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/jamayra/.nuget/NuGet/NuGet.Config"
@@ -47,6 +47,24 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[9.0.4, )"
             },
             "MySqlConnector": {
               "target": "Package",
