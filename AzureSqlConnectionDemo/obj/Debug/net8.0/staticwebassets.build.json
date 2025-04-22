@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "1QDuFQyEzGpdQXFz9jahyUCCLhWZ196Fn6qaOqieFnE=",
+  "Source": "AzureSqlConnectionDemo",
+  "BasePath": "_content/AzureSqlConnectionDemo",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
