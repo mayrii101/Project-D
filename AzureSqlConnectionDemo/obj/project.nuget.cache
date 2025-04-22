@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hoe5rQ/TScE=",
+  "dgSpecHash": "0f5/O1mQ7jA=",
   "success": true,
-  "projectFilePath": "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj",
+  "projectFilePath": "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj",
   "expectedPackageFiles": [
     "/Users/jamayra/.nuget/packages/azure.core/1.25.0/azure.core.1.25.0.nupkg.sha512",
     "/Users/jamayra/.nuget/packages/azure.identity/1.7.0/azure.identity.1.7.0.nupkg.sha512",

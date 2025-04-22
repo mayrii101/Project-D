@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj": {}
+    "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj": {}
   },
   "projects": {
-    "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj": {
+    "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj",
+        "projectUniqueName": "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj",
         "projectName": "AzureSqlConnectionDemo",
-        "projectPath": "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj",
+        "projectPath": "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/AzureSqlConnectionDemo.csproj",
         "packagesPath": "/Users/jamayra/.nuget/packages/",
-        "outputPath": "/Users/jamayra/DB research/AzureSqlConnectionDemo/AzureSqlConnectionDemo/obj/",
+        "outputPath": "/Users/jamayra/Documents/GitHub/Project-D/AzureSqlConnectionDemo/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/jamayra/.nuget/NuGet/NuGet.Config"
