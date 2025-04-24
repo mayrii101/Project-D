@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using AzureSqlConnectionDemo.Models;
+
 
 public class Order
 {
@@ -28,4 +30,6 @@ public class Order
     public DateTime? ActualDeliveryDate { get; set; }
 
     public bool IsDeleted { get; set; }
+    public ICollection<ShipmentOrder> ShipmentOrders { get; set; } = new List<ShipmentOrder>();
+
 }
