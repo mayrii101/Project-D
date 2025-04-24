@@ -18,21 +18,21 @@ namespace AzureSqlConnectionDemo.Models
             // Add Customers
             var customer1 = new Customer
             {
-                BedrijfsNaam = "Customer A",
-                ContactPersoon = "John Doe",
-                Email = "johndoe@example.com",
-                TelefoonNummer = "123-456-7890",
-                Adres = "123 Main St, City, Country",
+                BedrijfsNaam = "Bouwkracht BV",
+                ContactPersoon = "Kees de Bruin",
+                Email = "k.bruin@bouwkrachtbv.nl",
+                TelefoonNummer = "+31-409678581",
+                Adres = "Industrieweg 12, Utrecht",
                 IsDeleted = false
             };
 
             var customer2 = new Customer
             {
-                BedrijfsNaam = "Customer B",
-                ContactPersoon = "Jane Smith",
-                Email = "janesmith@example.com",
-                TelefoonNummer = "987-654-3210",
-                Adres = "456 Second St, City, Country",
+                BedrijfsNaam = "InfraTech Solutions",
+                ContactPersoon = "Sanne Willems",
+                Email = "sanne.w@infratechsol.com",
+                TelefoonNummer = "+31-809258582",
+                Adres = "Deltaweg 88, Zeeland",
                 IsDeleted = false
             };
 
@@ -41,23 +41,23 @@ namespace AzureSqlConnectionDemo.Models
             // Add Products
             var product1 = new Product
             {
-                ProductName = "Product 1",
-                WeightKg = 10,
+                ProductName = "Gewapend beton",
+                WeightKg = 6500,
                 Material = "Metal",
                 BatchNumber = 1001,
-                Price = 50.0,
-                Category = "Electronics",
+                Price = 3800,
+                Category = "Ruwbouw",
                 IsDeleted = false
             };
 
             var product2 = new Product
             {
-                ProductName = "Product 2",
-                WeightKg = 20,
+                ProductName = "Stalen I-balk (HEB 500)",
+                WeightKg = 1210,
                 Material = "Plastic",
                 BatchNumber = 1002,
-                Price = 30.0,
-                Category = "Toys",
+                Price = 1950,
+                Category = "Constructiestaal",
                 IsDeleted = false
             };
 
@@ -66,23 +66,26 @@ namespace AzureSqlConnectionDemo.Models
             // Add Warehouses
             var warehouse1 = new Warehouse
             {
-                Name = "Main Warehouse",
-                Location = "City, Country",
-                ContactPerson = "Alice",
-                Phone = "123-456-7890",
+                Name = "Lafeber Heavy Logistics Hub",
+                Location = "Gouda, Netherlands,",
+                ContactPerson = "Alice van Dijk",
+                Phone = "+31-101234567",
                 IsDeleted = false
             };
 
             var warehouse2 = new Warehouse
             {
-                Name = "Secondary Warehouse",
-                Location = "Another City, Country",
-                ContactPerson = "Bob",
-                Phone = "987-654-3210",
+                Name = "Lafeber Inland Storage Facility",
+                Location = "Eindhoven, Netherlands",
+                ContactPerson = "Bob Meijer",
+                Phone = "+31-409876543",
                 IsDeleted = false
             };
 
             context.Warehouses.AddRange(warehouse1, warehouse2);
+
+            // Call SaveChanges to generate the IDs for the Customers, Products, and Warehouses
+            context.SaveChanges();
 
             // Add Inventory
             context.Inventories.AddRange(
@@ -107,17 +110,17 @@ namespace AzureSqlConnectionDemo.Models
             // Add Employees
             var employee1 = new Employee
             {
-                Name = "Employee A",
+                Name = "Mark Jansen",
                 Role = "Driver",
-                Email = "employeeA@example.com",
+                Email = "mark.jansen@lafeberlogistics.nl",
                 IsDeleted = false
             };
 
             var employee2 = new Employee
             {
-                Name = "Employee B",
+                Name = "Fatima El Idrissi",
                 Role = "Driver",
-                Email = "employeeB@example.com",
+                Email = "fatima.elidrissi@lafeberlogistics.nl",
                 IsDeleted = false
             };
 
@@ -129,7 +132,7 @@ namespace AzureSqlConnectionDemo.Models
                 CustomerId = customer1.Id,
                 Status = OrderStatus.Pending,
                 OrderDate = DateTime.Now,
-                DeliveryAddress = "123 Main St, City, Country",
+                DeliveryAddress = "Deltaweg 88, Zeeland",
                 ExpectedDeliveryDate = DateTime.Now.AddDays(5),
                 ActualDeliveryDate = null,
                 IsDeleted = false
@@ -140,13 +143,16 @@ namespace AzureSqlConnectionDemo.Models
                 CustomerId = customer2.Id,
                 Status = OrderStatus.Processing,
                 OrderDate = DateTime.Now,
-                DeliveryAddress = "456 Second St, City, Country",
+                DeliveryAddress = "Industrieweg 12, Utrecht",
                 ExpectedDeliveryDate = DateTime.Now.AddDays(3),
                 ActualDeliveryDate = null,
                 IsDeleted = false
             };
 
             context.Orders.AddRange(order1, order2);
+
+            // Call SaveChanges to generate the IDs for Orders
+            context.SaveChanges();
 
             // Add OrderLines
             context.OrderLines.AddRange(
@@ -170,8 +176,8 @@ namespace AzureSqlConnectionDemo.Models
             var vehicle1 = new Vehicle
             {
                 LicensePlate = "ABC123",
-                CapacityKg = 1000,
-                Type = VehicleType.Truck,
+                CapacityKg = 25000,
+                Type = VehicleType.FlatbedTrailer,
                 Status = VehicleStatus.Available,
                 IsDeleted = false
             };
@@ -179,13 +185,16 @@ namespace AzureSqlConnectionDemo.Models
             var vehicle2 = new Vehicle
             {
                 LicensePlate = "XYZ456",
-                CapacityKg = 500,
-                Type = VehicleType.Van,
+                CapacityKg = 60000,
+                Type = VehicleType.LowbedTrailer,
                 Status = VehicleStatus.InUse,
                 IsDeleted = false
             };
 
             context.Vehicles.AddRange(vehicle1, vehicle2);
+
+            // Call SaveChanges to generate the IDs for Vehicles
+            context.SaveChanges();
 
             // Add Shipments
             var shipment1 = new Shipment
@@ -193,10 +202,7 @@ namespace AzureSqlConnectionDemo.Models
                 VehicleId = vehicle1.Id,
                 DriverId = employee1.Id,
                 Status = ShipmentStatus.Preparing,
-                DepartureDate = DateTime.Now,
-                ExpectedDeliveryDate = DateTime.Now.AddDays(2),
-                ActualDeliveryDate = null,
-                IsDeleted = false
+                DepartureDate = DateTime.Now
             };
 
             var shipment2 = new Shipment
@@ -204,55 +210,34 @@ namespace AzureSqlConnectionDemo.Models
                 VehicleId = vehicle2.Id,
                 DriverId = employee2.Id,
                 Status = ShipmentStatus.OutForDelivery,
-                DepartureDate = DateTime.Now,
-                ExpectedDeliveryDate = DateTime.Now.AddDays(1),
-                ActualDeliveryDate = null,
-                IsDeleted = false
+                DepartureDate = DateTime.Now
             };
 
             context.Shipments.AddRange(shipment1, shipment2);
 
-            // Add ShipmentOrders (Many-to-Many relationship between Orders and Shipments)
-            context.ShipmentOrders.AddRange(
-                new ShipmentOrder
-                {
-                    ShipmentId = shipment1.Id,
-                    OrderId = order1.Id
-                },
-                new ShipmentOrder
-                {
-                    ShipmentId = shipment2.Id,
-                    OrderId = order2.Id
-                }
-            );
+            // Save all the changes to the database
+            context.SaveChanges();
 
-            // Add Inventory Transactions
-            var transaction1 = new InventoryTransaction
+            // Add ShipmentOrders to link Shipments to Orders
+            var shipmentOrder1 = new ShipmentOrder
             {
-                ProductId = product1.Id,
-                Quantity = 50,
-                Type = InventoryTransactionType.Outbound,
-                Timestamp = DateTime.Now,
-                EmployeeId = employee1.Id,
-                SourceOrDestination = "Customer A",
-                IsDeleted = false
+                ShipmentId = shipment1.Id,
+                OrderId = order1.Id
             };
 
-            var transaction2 = new InventoryTransaction
+            var shipmentOrder2 = new ShipmentOrder
             {
-                ProductId = product2.Id,
-                Quantity = 30,
-                Type = InventoryTransactionType.Outbound,
-                Timestamp = DateTime.Now,
-                EmployeeId = employee2.Id,
-                SourceOrDestination = "Customer B",
-                IsDeleted = false
+                ShipmentId = shipment2.Id,
+                OrderId = order2.Id
             };
 
-            context.InventoryTransactions.AddRange(transaction1, transaction2);
+            context.ShipmentOrders.AddRange(shipmentOrder1, shipmentOrder2);
 
-            // Save changes to the database
+            // Final SaveChanges to persist ShipmentOrders in the database
             context.SaveChanges();
         }
     }
 }
+
+
+

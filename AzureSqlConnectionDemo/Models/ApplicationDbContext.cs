@@ -14,10 +14,28 @@ namespace AzureSqlConnectionDemo.Models
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
-
-        // Add missing DbSets
         public DbSet<OrderLine> OrderLines { get; set; }
         public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
         public DbSet<ShipmentOrder> ShipmentOrders { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Composite key for ShipmentOrder
+            modelBuilder.Entity<ShipmentOrder>()
+                .HasKey(so => new { so.ShipmentId, so.OrderId });
+
+            // Define relationships
+            modelBuilder.Entity<ShipmentOrder>()
+                .HasOne(so => so.Shipment)
+                .WithMany(s => s.ShipmentOrders)
+                .HasForeignKey(so => so.ShipmentId);
+
+            modelBuilder.Entity<ShipmentOrder>()
+                .HasOne(so => so.Order)
+                .WithMany(o => o.ShipmentOrders)
+                .HasForeignKey(so => so.OrderId);
+        }
     }
 }

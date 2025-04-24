@@ -83,5 +83,26 @@ namespace AzureSqlConnectionDemo.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public bool CreateShipmentOrder(int orderId, int shipmentId)
+        {
+            var order = _context.Orders.Find(orderId);
+            var shipment = _context.Shipments.Find(shipmentId);
+
+            if (order != null && shipment != null)
+            {
+                var shipmentOrder = new ShipmentOrder
+                {
+                    Shipment = shipment,
+                    Order = order
+                };
+
+                _context.ShipmentOrders.Add(shipmentOrder);
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
     }
 }

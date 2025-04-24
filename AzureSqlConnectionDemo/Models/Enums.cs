@@ -16,9 +16,9 @@ public enum OrderStatus
 
 public enum VehicleType
 {
-    Truck,
-    Van,
-    Other
+    FlatbedTrailer,
+    LowbedTrailer,
+    Kipper
 }
 
 public enum VehicleStatus
@@ -34,3 +34,4 @@ public enum ShipmentStatus
     OutForDelivery,
     Delivered
 }
+
