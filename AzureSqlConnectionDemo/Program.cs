@@ -29,7 +29,7 @@ var app = builder.Build();
 
 // Configure middleware
 app.UseRouting();
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers(); // Important to expose your API endpoints!
 
