@@ -4,8 +4,11 @@ using AzureSqlConnectionDemo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// 🔥 Force the app to listen on specific ports (before building)
+builder.WebHost.UseUrls("http://localhost:5000");
+
 // Configure services
-builder.Services.AddControllers(); // Add this!
+builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer("Server=lafeberdb.database.windows.net,1433;" +
                          "Database=LFDatabaseAzure;" +

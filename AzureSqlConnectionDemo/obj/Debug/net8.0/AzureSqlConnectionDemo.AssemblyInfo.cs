@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AzureSqlConnectionDemo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f2068ddc471afce8e0646cbb44eb74fad56d6ad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e81a0c4d82b2474bfac11ab8f45959dce1f8c459")]
 [assembly: System.Reflection.AssemblyProductAttribute("AzureSqlConnectionDemo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AzureSqlConnectionDemo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

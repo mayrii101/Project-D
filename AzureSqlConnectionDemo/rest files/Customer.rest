@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### Update an existing customer
-PUT http://localhost:5000/api/customer/1
+PUT http://localhost:5000/api/customer/3
 Content-Type: application/json
 
 {
@@ -31,4 +31,4 @@ Content-Type: application/json
 }
 
 ### Soft delete a customer
-DELETE http://localhost:5000/api/customer/1
+DELETE http://localhost:5000/api/customer/3
