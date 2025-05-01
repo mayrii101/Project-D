@@ -413,3 +413,11 @@ AzureStorageEmulatorDb5.*
 *.azurePubxml
 *.publishsettings
 ASALocalRun/
+
+### Azure SQL Connection Artifacts (Block ALL) ###
+AzureSqlConnection*
+*.deps.json
+*.dll
+*.pdb
+*.cache
+*.props
