@@ -2,15 +2,18 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #000; /* Ensures full page black */
+  background-color: #000;
+  /* Ensures full page black */
 }
 
 .dashboard {
   background-color: #000;
   color: white;
   min-height: 100vh;
-  width: 100vw; /* Full viewport width */
-  overflow-x: hidden; /* Prevents horizontal scroll */
+  width: 100vw;
+  /* Full viewport width */
+  overflow-x: hidden;
+  /* Prevents horizontal scroll */
 }
 
 .header {
@@ -25,17 +28,21 @@ body {
   background-color: #000;
   padding: 24px;
   max-width: 1200px;
-  margin: 0 auto; /* Centers content */
+  margin: 0 auto;
+  /* Centers content */
 }
 
 .banner {
   background-color: #2f8f2f;
-  text-align: center;
-  padding: 24px;
+  text-align: left;
+  padding: 16px 24px;
   font-size: 28px;
   font-weight: bold;
   border-radius: 8px;
   margin-bottom: 24px;
+  width: fit-content;
+  /* Makes banner only as wide as its content */
+  max-width: 100%;
 }
 
 .stats {
@@ -51,7 +58,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   font-weight: 500;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.2s;
 }
@@ -122,4 +129,55 @@ body {
 .status.processing {
   background-color: #9966ff;
   color: #fff;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.search-container input {
+  padding: 8px 12px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  width: 250px;
+}
+
+/* Keep all your existing styles below */
+
+/* Add these styles to your existing MainDashboard.css */
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Make sure the search bar and filter align properly */
+.search-container {
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .header-controls {
+    width: 100%;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .search-container input,
+  .status-filter {
+    width: 100%;
+  }
 }

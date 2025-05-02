@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./MainDashboard.css";
+import SearchBar from "./SearchBar";
+import Filter from "./Filter";
 
 interface Order {
   id: number;
@@ -8,13 +10,17 @@ interface Order {
 
 const Dashboard: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   useEffect(() => {
     fetch("https://localhost:5000/api/Order")
       .then((res) => res.json())
       .then((data) => {
         setOrders(data);
+        setFilteredOrders(data);
         setLoading(false);
       })
       .catch((err) => {
@@ -23,13 +29,33 @@ const Dashboard: React.FC = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const filtered = orders.filter(order =>
+      order.id.toString().includes(searchTerm) ||
+      order.status.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredOrders(filtered);
+  }, [searchTerm, orders]);
+
+  useEffect(() => {
+    const filtered = orders.filter(order => {
+      const matchesSearch =
+        order.id.toString().includes(searchTerm) ||
+        order.status.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesStatus =
+        !selectedStatus || order.status.toLowerCase() === selectedStatus.toLowerCase();
+
+      return matchesSearch && matchesStatus;
+    });
+    setFilteredOrders(filtered);
+  }, [searchTerm, orders, selectedStatus]);
+
   const stats = {
-    total: orders.length,
-    delivered: orders.filter(o => o.status.toLowerCase() === "delivered").length,
-    inTransit: orders.filter(o => o.status.toLowerCase() === "shipped").length,
-    cancelled: orders.filter(o => o.status.toLowerCase() === "cancelled").length,
-    pending: orders.filter(o => o.status.toLowerCase() === "pending").length,
-    processing: orders.filter(o => o.status.toLowerCase() === "processing").length
+    total: filteredOrders.length,
+    delivered: filteredOrders.filter(o => o.status.toLowerCase() === "delivered").length,
+    inTransit: filteredOrders.filter(o => o.status.toLowerCase() === "shipped").length,
+    cancelled: filteredOrders.filter(o => o.status.toLowerCase() === "cancelled").length,
   };
 
   return (
@@ -37,7 +63,13 @@ const Dashboard: React.FC = () => {
       <header className="header">Database (Admin View)</header>
 
       <div className="main">
-        <div className="banner">Dashboard</div>
+        <div className="dashboard-header">
+          <div className="banner">Dashboard</div>
+          <div className="header-controls">
+            <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+            <Filter selectedStatus={selectedStatus} onStatusChange={setSelectedStatus} />
+          </div>
+        </div>
 
         {loading ? (
           <div className="loading">Loading data...</div>
@@ -65,7 +97,7 @@ const Dashboard: React.FC = () => {
             <div className="details">
               <div className="section">
                 <h2>Recent Orders</h2>
-                {orders.slice(0, 5).map((o) => (
+                {filteredOrders.slice(0, 5).map((o) => (
                   <p key={o.id}>
                     <span>Order #{o.id}</span>
                     <span className={`status ${o.status.toLowerCase()}`}>
