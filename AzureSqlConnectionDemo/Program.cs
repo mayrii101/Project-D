@@ -1,14 +1,32 @@
 using Microsoft.EntityFrameworkCore;
 using AzureSqlConnectionDemo.Models;
 using AzureSqlConnectionDemo.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔥 Force the app to listen on specific ports (before building)
 builder.WebHost.UseUrls("http://localhost:5000");
 
-// Configure services
-builder.Services.AddControllers();
+//CORS voor connectie met frontend 
+//AllowAll later aanpassen naar frontend locatie
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+//JSON enum converter (enums worden als string gebruikt/gelezen)
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
+//Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer("Server=lafeberdb.database.windows.net,1433;" +
                          "Database=LFDatabaseAzure;" +
@@ -18,7 +36,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
                          "Encrypt=False;" +
                          "Connection Timeout=30;"));
 
-// Add services
+
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
@@ -30,13 +48,14 @@ builder.Services.AddScoped<IInventoryTransactionService, InventoryTransactionSer
 
 var app = builder.Build();
 
-// Configure middleware
+
 app.UseRouting();
-//app.UseAuthorization();
+app.UseCors("AllowAll");
+// app.UseAuthorization(); 
 
-app.MapControllers(); // Important to expose your API endpoints!
+app.MapControllers();
 
-// Optional: Test DB Connection and Seed
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -46,9 +65,9 @@ using (var scope = app.Services.CreateScope())
     {
         context.Database.OpenConnection();
         Console.WriteLine("Connection successful!");
+        //UNCOMMENT om seeddata te runnen voor lege DB
+        // SeedData.Initialize(services, context); 
 
-        //SEEDDATA uncomment to run
-        //SeedData.Initialize(services, context);
     }
     catch (Exception ex)
     {
@@ -56,5 +75,5 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.Run();
 
+app.Run();
