@@ -16,7 +16,7 @@ const Dashboard: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState("");
 
   useEffect(() => {
-    fetch("https://localhost:5000/api/Order")
+    fetch("http://localhost:5000/api/order")
       .then((res) => res.json())
       .then((data) => {
         setOrders(data);
