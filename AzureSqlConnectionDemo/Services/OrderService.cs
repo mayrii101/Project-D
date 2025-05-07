@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using AzureSqlConnectionDemo.Models;
 using AzureSqlConnectionDemo.Models;
+
 namespace AzureSqlConnectionDemo.Services
 {
     public interface IOrderService
@@ -25,7 +26,7 @@ namespace AzureSqlConnectionDemo.Services
         {
             return await _context.Orders
                 .Include(o => o.Customer)
-                .Include(o => o.ProductLines)
+                .Include(o => o.ProductLines.Where(pl => !pl.IsDeleted)) // Exclude soft-deleted lines
                     .ThenInclude(pl => pl.Product)
                 .Include(o => o.ShipmentOrders)
                     .ThenInclude(so => so.Shipment)
@@ -37,7 +38,7 @@ namespace AzureSqlConnectionDemo.Services
         {
             return await _context.Orders
                 .Include(o => o.Customer)
-                .Include(o => o.ProductLines)
+                .Include(o => o.ProductLines.Where(pl => !pl.IsDeleted)) // Exclude soft-deleted lines
                     .ThenInclude(pl => pl.Product)
                 .Include(o => o.ShipmentOrders)
                     .ThenInclude(so => so.Shipment)
@@ -51,6 +52,7 @@ namespace AzureSqlConnectionDemo.Services
             return order;
         }
 
+
         public async Task<Order?> UpdateOrderAsync(int id, Order order)
         {
             var existingOrder = await GetOrderByIdAsync(id);
@@ -63,7 +65,10 @@ namespace AzureSqlConnectionDemo.Services
             existingOrder.ActualDeliveryDate = order.ActualDeliveryDate;
             existingOrder.Status = order.Status;
 
-            existingOrder.ProductLines = order.ProductLines;
+            // Remove any soft-deleted product lines (not visible in GET requests)
+            existingOrder.ProductLines = order.ProductLines
+                .Where(pl => !pl.IsDeleted) // Only include active lines
+                .ToList();
 
             await _context.SaveChangesAsync();
             return existingOrder;
@@ -71,10 +76,14 @@ namespace AzureSqlConnectionDemo.Services
 
         public async Task<bool> SoftDeleteOrderAsync(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders
+                .Include(o => o.ProductLines)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
             if (order == null || order.IsDeleted) return false;
 
-            order.IsDeleted = true;
+            // Use the SoftDelete method instead of setting the value directly
+            order.SoftDelete();
             await _context.SaveChangesAsync();
             return true;
         }

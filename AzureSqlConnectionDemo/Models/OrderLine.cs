@@ -20,5 +20,9 @@ public class OrderLine
 
     [NotMapped]
     public double LineTotal => Product.Price * Quantity;
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; private set; } = false; // Only modified internally
+    public void SoftDelete()
+    {
+        IsDeleted = true;
+    }
 }

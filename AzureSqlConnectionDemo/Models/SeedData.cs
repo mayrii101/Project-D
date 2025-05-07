@@ -135,7 +135,6 @@ namespace AzureSqlConnectionDemo.Models
                 DeliveryAddress = "Deltaweg 88, Zeeland",
                 ExpectedDeliveryDate = DateTime.Now.AddDays(5),
                 ActualDeliveryDate = null,
-                IsDeleted = false
             };
 
             var order2 = new Order
@@ -146,7 +145,7 @@ namespace AzureSqlConnectionDemo.Models
                 DeliveryAddress = "Industrieweg 12, Utrecht",
                 ExpectedDeliveryDate = DateTime.Now.AddDays(3),
                 ActualDeliveryDate = null,
-                IsDeleted = false
+
             };
 
             context.Orders.AddRange(order1, order2);
@@ -161,14 +160,12 @@ namespace AzureSqlConnectionDemo.Models
                     OrderId = order1.Id,
                     ProductId = product1.Id,
                     Quantity = 2,
-                    IsDeleted = false
                 },
                 new OrderLine
                 {
                     OrderId = order2.Id,
                     ProductId = product2.Id,
                     Quantity = 1,
-                    IsDeleted = false
                 }
             );
 

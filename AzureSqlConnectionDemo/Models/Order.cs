@@ -29,7 +29,11 @@ public class Order
 
     public DateTime? ActualDeliveryDate { get; set; }
 
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; private set; } = false; // Only modified internally
     public ICollection<ShipmentOrder> ShipmentOrders { get; set; } = new List<ShipmentOrder>();
+    public void SoftDelete()
+    {
+        IsDeleted = true;
+    }
 
 }
