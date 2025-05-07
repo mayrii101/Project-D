@@ -19,11 +19,13 @@ builder.Services.AddCors(options =>
     });
 });
 
-//JSON enum converter (enums worden als string gebruikt/gelezen)
+//JSON enum converter (enums worden als string gebruikt/gelezen) + Prevent Circular References
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     });
 
 //Database
@@ -77,3 +79,4 @@ using (var scope = app.Services.CreateScope())
 
 
 app.Run();
+
