@@ -58,6 +58,9 @@ namespace AzureSqlConnectionDemo.Services
                 var productExists = await _context.Products.AnyAsync(p => p.Id == line.ProductId);
                 if (!productExists)
                     throw new Exception($"Product with ID {line.ProductId} not found.");
+
+                // Explicitly set the OrderId for ProductLine
+                line.OrderId = order.Id;
             }
 
             // Validate Shipments
@@ -66,6 +69,9 @@ namespace AzureSqlConnectionDemo.Services
                 var shipmentExists = await _context.Shipments.AnyAsync(s => s.Id == shipmentOrder.ShipmentId);
                 if (!shipmentExists)
                     throw new Exception($"Shipment with ID {shipmentOrder.ShipmentId} not found.");
+
+                // Explicitly set the OrderId for ShipmentOrder
+                shipmentOrder.OrderId = order.Id;
             }
 
             // Add Order — EF will link by foreign keys

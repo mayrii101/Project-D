@@ -11,9 +11,9 @@ namespace AzureSqlConnectionDemo.Models
         [Required]
         public int CustomerId { get; set; }
 
-        // Remove [Required] here
+        // Removed [Required] here. The foreign key is required (CustomerId), but the navigation property itself is optional.
         [ForeignKey(nameof(CustomerId))]
-        public Customer Customer { get; set; } = default!;
+        public Customer Customer { get; set; } = default!;  // This is fine as it will be automatically populated if the foreign key is valid.
 
         [Required]
         public DateTime OrderDate { get; set; }
