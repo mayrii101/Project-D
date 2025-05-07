@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using AzureSqlConnectionDemo.Models;
 using AzureSqlConnectionDemo.Services;
 
+
+
 namespace AzureSqlConnectionDemo.Controllers
 {
     [Route("api/[controller]")]
@@ -18,16 +20,14 @@ namespace AzureSqlConnectionDemo.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Order>>> GetAllOrders()
         {
-            var orders = await _orderService.GetAllOrdersAsync();
-            return Ok(orders);
+            return Ok(await _orderService.GetAllOrdersAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
-            if (order == null) return NotFound();
-            return Ok(order);
+            return order == null ? NotFound() : Ok(order);
         }
 
         [HttpPost]
@@ -41,16 +41,14 @@ namespace AzureSqlConnectionDemo.Controllers
         public async Task<ActionResult<Order>> UpdateOrder(int id, Order order)
         {
             var updatedOrder = await _orderService.UpdateOrderAsync(id, order);
-            if (updatedOrder == null) return NotFound();
-            return Ok(updatedOrder);
+            return updatedOrder == null ? NotFound() : Ok(updatedOrder);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> SoftDeleteOrder(int id)
         {
             var deleted = await _orderService.SoftDeleteOrderAsync(id);
-            if (!deleted) return NotFound();
-            return NoContent();
+            return !deleted ? NotFound() : NoContent();
         }
     }
 }

@@ -6,9 +6,9 @@ namespace AzureSqlConnectionDemo.Services
     public interface IOrderService
     {
         Task<List<Order>> GetAllOrdersAsync();
-        Task<Order> GetOrderByIdAsync(int id);
+        Task<Order?> GetOrderByIdAsync(int id);
         Task<Order> CreateOrderAsync(Order order);
-        Task<Order> UpdateOrderAsync(int id, Order order);
+        Task<Order?> UpdateOrderAsync(int id, Order order);
         Task<bool> SoftDeleteOrderAsync(int id);
     }
 
@@ -23,12 +23,25 @@ namespace AzureSqlConnectionDemo.Services
 
         public async Task<List<Order>> GetAllOrdersAsync()
         {
-            return await _context.Orders.Where(o => !o.IsDeleted).ToListAsync();
+            return await _context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.ProductLines)
+                    .ThenInclude(pl => pl.Product)
+                .Include(o => o.ShipmentOrders)
+                    .ThenInclude(so => so.Shipment)
+                .Where(o => !o.IsDeleted)
+                .ToListAsync();
         }
 
-        public async Task<Order> GetOrderByIdAsync(int id)
+        public async Task<Order?> GetOrderByIdAsync(int id)
         {
-            return await _context.Orders.Where(o => !o.IsDeleted).FirstOrDefaultAsync(o => o.Id == id);
+            return await _context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.ProductLines)
+                    .ThenInclude(pl => pl.Product)
+                .Include(o => o.ShipmentOrders)
+                    .ThenInclude(so => so.Shipment)
+                .FirstOrDefaultAsync(o => o.Id == id && !o.IsDeleted);
         }
 
         public async Task<Order> CreateOrderAsync(Order order)
@@ -38,15 +51,11 @@ namespace AzureSqlConnectionDemo.Services
             return order;
         }
 
-        public async Task<Order> UpdateOrderAsync(int id, Order order)
+        public async Task<Order?> UpdateOrderAsync(int id, Order order)
         {
-            var existingOrder = await _context.Orders
-                .Include(o => o.ProductLines)  //Include OrderLines
-                .FirstOrDefaultAsync(o => o.Id == id);
+            var existingOrder = await GetOrderByIdAsync(id);
+            if (existingOrder == null) return null;
 
-            if (existingOrder == null || existingOrder.IsDeleted) return null;
-
-            //order properties
             existingOrder.CustomerId = order.CustomerId;
             existingOrder.OrderDate = order.OrderDate;
             existingOrder.DeliveryAddress = order.DeliveryAddress;
@@ -54,20 +63,7 @@ namespace AzureSqlConnectionDemo.Services
             existingOrder.ActualDeliveryDate = order.ActualDeliveryDate;
             existingOrder.Status = order.Status;
 
-            //update orderlines
-            foreach (var updatedOrderLine in order.ProductLines)
-            {
-                var existingOrderLine = existingOrder.ProductLines
-                    .FirstOrDefault(ol => ol.ProductId == updatedOrderLine.ProductId);
-                if (existingOrderLine != null)
-                {
-                    existingOrderLine.Quantity = updatedOrderLine.Quantity;
-                }
-                else
-                {
-                    existingOrder.ProductLines.Add(updatedOrderLine);
-                }
-            }
+            existingOrder.ProductLines = order.ProductLines;
 
             await _context.SaveChangesAsync();
             return existingOrder;

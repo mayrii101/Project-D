@@ -16,6 +16,7 @@ const Filter: React.FC<FilterProps> = ({ selectedStatus, onStatusChange }) => {
             >
                 <option value="">Alle status</option>
                 <option value="pending">In afwachting</option>
+                <option value="processing">wordt verwerkt</option>
                 <option value="shipped">Verzonden</option>
                 <option value="delivered">Geleverd</option>
                 <option value="cancelled">Geannuleerd</option>
