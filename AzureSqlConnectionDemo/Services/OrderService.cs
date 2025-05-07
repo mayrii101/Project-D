@@ -68,6 +68,10 @@ namespace AzureSqlConnectionDemo.Services
                 line.Product = product;
             }
 
+            // Recalculate the total weight (no need to set the property)
+            int totalWeight = order.ProductLines.Sum(pl => pl.Product.WeightKg * pl.Quantity);
+            Console.WriteLine($"Total Weight: {totalWeight}kg");
+
             // Load shipments for shipment orders
             foreach (var shipmentOrder in order.ShipmentOrders)
             {
@@ -84,6 +88,8 @@ namespace AzureSqlConnectionDemo.Services
             await _context.SaveChangesAsync();
             return order;
         }
+
+
 
 
 
