@@ -47,10 +47,25 @@ namespace AzureSqlConnectionDemo.Services
 
         public async Task<Order> CreateOrderAsync(Order order)
         {
+            // Ensure product lines are valid and products are linked
+            foreach (var line in order.ProductLines)
+            {
+                var product = await _context.Products
+                    .FirstOrDefaultAsync(p => p.Id == line.ProductId);
+
+                if (product == null)
+                {
+                    throw new Exception($"Product with ID {line.ProductId} not found.");
+                }
+
+                line.Product = product; // Assign the product to the order line
+            }
+
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
             return order;
         }
+
 
 
         public async Task<Order?> UpdateOrderAsync(int id, Order order)
