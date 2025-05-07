@@ -1,42 +1,44 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AzureSqlConnectionDemo.Models;
 
-
-public class Order
+namespace AzureSqlConnectionDemo.Models
 {
-    [Key]
-    public int Id { get; set; }
-
-    [Required]
-    public int CustomerId { get; set; }
-
-    [ForeignKey("CustomerId")]
-    public Customer Customer { get; set; } = default!;
-
-    public List<OrderLine> ProductLines { get; set; } = new();
-
-    [NotMapped]
-    public int TotalWeight => ProductLines
-        .Where(pl => pl.Product != null) // Ensure Product is loaded
-        .Sum(pl => (pl.Product?.WeightKg ?? 0) * pl.Quantity);
-
-
-    public OrderStatus Status { get; set; }
-
-    public DateTime OrderDate { get; set; }
-
-    public string DeliveryAddress { get; set; } = string.Empty;
-
-    public DateTime ExpectedDeliveryDate { get; set; }
-
-    public DateTime? ActualDeliveryDate { get; set; }
-
-    public bool IsDeleted { get; private set; } = false; // Only modified internally
-    public ICollection<ShipmentOrder> ShipmentOrders { get; set; } = new List<ShipmentOrder>();
-    public void SoftDelete()
+    public class Order
     {
-        IsDeleted = true;
-    }
+        [Key]
+        public int Id { get; set; }
 
+        [Required]
+        public int CustomerId { get; set; }
+
+        [ForeignKey(nameof(CustomerId))]
+        public Customer Customer { get; set; } = default!;
+
+        [Required]
+        public DateTime OrderDate { get; set; }
+
+        [Required, StringLength(250)]
+        public string DeliveryAddress { get; set; } = string.Empty;
+
+        [Required]
+        public DateTime ExpectedDeliveryDate { get; set; }
+
+        public DateTime? ActualDeliveryDate { get; set; }
+
+        [Required]
+        public OrderStatus Status { get; set; }
+
+        public bool IsDeleted { get; private set; } = false;
+
+        public ICollection<OrderLine> ProductLines { get; set; } = new List<OrderLine>();
+
+        public ICollection<ShipmentOrder> ShipmentOrders { get; set; } = new List<ShipmentOrder>();
+
+        [NotMapped]
+        public int TotalWeight => ProductLines
+            .Where(pl => pl.Product != null)
+            .Sum(pl => (pl.Product?.WeightKg ?? 0) * pl.Quantity);
+
+        public void SoftDelete() => IsDeleted = true;
+    }
 }

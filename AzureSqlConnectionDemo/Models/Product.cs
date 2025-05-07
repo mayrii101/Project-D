@@ -1,26 +1,34 @@
 using System.ComponentModel.DataAnnotations;
 
-public class Product
+namespace AzureSqlConnectionDemo.Models
 {
-    [Key]
-    public int Id { get; set; }
+    public class Product
+    {
+        [Key]
+        public int Id { get; set; }
 
-    [Required]
-    public string ProductName { get; set; } = string.Empty;
+        [Required, StringLength(100)]
+        public string ProductName { get; set; } = string.Empty;
 
-    public string SKU { get; set; } = string.Empty;
+        [StringLength(50)]
+        public string SKU { get; set; } = string.Empty;
 
-    public int WeightKg { get; set; }
+        [Range(0, int.MaxValue)]
+        public int WeightKg { get; set; }
 
-    public string Material { get; set; } = string.Empty;
+        [StringLength(100)]
+        public string Material { get; set; } = string.Empty;
 
-    public int BatchNumber { get; set; }
+        public int BatchNumber { get; set; }
 
-    [Range(0, double.MaxValue)]
-    public double Price { get; set; }
+        [Range(0, double.MaxValue)]
+        public double Price { get; set; }
 
-    public string Category { get; set; } = string.Empty;
+        [StringLength(100)]
+        public string Category { get; set; } = string.Empty;
 
-    public DateTime? ExpirationDate { get; set; }
-    public bool IsDeleted { get; set; }
+        public DateTime? ExpirationDate { get; set; }
+
+        public bool IsDeleted { get; set; }
+    }
 }

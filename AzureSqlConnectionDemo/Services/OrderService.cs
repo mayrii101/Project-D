@@ -47,56 +47,40 @@ namespace AzureSqlConnectionDemo.Services
 
         public async Task<Order> CreateOrderAsync(Order order)
         {
-            // Load and assign the customer
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(c => c.Id == order.CustomerId);
-            if (customer == null)
-            {
+            // Validate Customer exists
+            var customerExists = await _context.Customers.AnyAsync(c => c.Id == order.CustomerId);
+            if (!customerExists)
                 throw new Exception($"Customer with ID {order.CustomerId} not found.");
-            }
-            order.Customer = customer;
 
-            // Load products for product lines
+            // Validate and clean ProductLines
             foreach (var line in order.ProductLines)
             {
-                var product = await _context.Products
-                    .FirstOrDefaultAsync(p => p.Id == line.ProductId);
-                if (product == null)
-                {
+                var productExists = await _context.Products.AnyAsync(p => p.Id == line.ProductId);
+                if (!productExists)
                     throw new Exception($"Product with ID {line.ProductId} not found.");
-                }
-                line.Product = product;
             }
 
-            // Recalculate the total weight (no need to set the property)
-            int totalWeight = order.ProductLines.Sum(pl => pl.Product.WeightKg * pl.Quantity);
-            Console.WriteLine($"Total Weight: {totalWeight}kg");
-
-            // Load shipments for shipment orders
+            // Validate Shipments
             foreach (var shipmentOrder in order.ShipmentOrders)
             {
-                var shipment = await _context.Shipments
-                    .FirstOrDefaultAsync(s => s.Id == shipmentOrder.ShipmentId);
-                if (shipment == null)
-                {
+                var shipmentExists = await _context.Shipments.AnyAsync(s => s.Id == shipmentOrder.ShipmentId);
+                if (!shipmentExists)
                     throw new Exception($"Shipment with ID {shipmentOrder.ShipmentId} not found.");
-                }
-                shipmentOrder.Shipment = shipment;
             }
 
+            // Add Order — EF will link by foreign keys
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
             return order;
         }
 
-
-
-
-
-
         public async Task<Order?> UpdateOrderAsync(int id, Order order)
         {
-            var existingOrder = await GetOrderByIdAsync(id);
+            var existingOrder = await _context.Orders
+                .Include(o => o.ProductLines)
+                .Include(o => o.ShipmentOrders)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
             if (existingOrder == null) return null;
 
             existingOrder.CustomerId = order.CustomerId;
@@ -106,10 +90,27 @@ namespace AzureSqlConnectionDemo.Services
             existingOrder.ActualDeliveryDate = order.ActualDeliveryDate;
             existingOrder.Status = order.Status;
 
-            // Remove any soft-deleted product lines (not visible in GET requests)
-            existingOrder.ProductLines = order.ProductLines
-                .Where(pl => !pl.IsDeleted) // Only include active lines
-                .ToList();
+            // Update ProductLines (soft-delete strategy optional)
+            existingOrder.ProductLines.Clear();
+            foreach (var line in order.ProductLines)
+            {
+                existingOrder.ProductLines.Add(new OrderLine
+                {
+                    ProductId = line.ProductId,
+                    Quantity = line.Quantity
+                });
+            }
+
+            // Update ShipmentOrders
+            existingOrder.ShipmentOrders.Clear();
+            foreach (var so in order.ShipmentOrders)
+            {
+                existingOrder.ShipmentOrders.Add(new ShipmentOrder
+                {
+                    ShipmentId = so.ShipmentId,
+                    OrderId = id
+                });
+            }
 
             await _context.SaveChangesAsync();
             return existingOrder;
