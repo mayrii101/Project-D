@@ -47,44 +47,44 @@ namespace AzureSqlConnectionDemo.Services
 
         public async Task<Order> CreateOrderAsync(Order order)
         {
-            // Ensure product lines are valid and products are linked
+            // Load and assign the customer
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(c => c.Id == order.CustomerId);
+            if (customer == null)
+            {
+                throw new Exception($"Customer with ID {order.CustomerId} not found.");
+            }
+            order.Customer = customer;
+
+            // Load products for product lines
             foreach (var line in order.ProductLines)
             {
-                // Fetch the product from the database
                 var product = await _context.Products
                     .FirstOrDefaultAsync(p => p.Id == line.ProductId);
-
                 if (product == null)
                 {
                     throw new Exception($"Product with ID {line.ProductId} not found.");
                 }
-
-                line.Product = product; // Assign the product to the order line
+                line.Product = product;
             }
 
-            // Ensure shipment orders are valid and linked
+            // Load shipments for shipment orders
             foreach (var shipmentOrder in order.ShipmentOrders)
             {
                 var shipment = await _context.Shipments
                     .FirstOrDefaultAsync(s => s.Id == shipmentOrder.ShipmentId);
-
                 if (shipment == null)
                 {
                     throw new Exception($"Shipment with ID {shipmentOrder.ShipmentId} not found.");
                 }
-
-                shipmentOrder.Shipment = shipment; // Assign the shipment to the shipment order
+                shipmentOrder.Shipment = shipment;
             }
 
-            // Add the order to the context
             _context.Orders.Add(order);
-
-            // Save the changes to the database
             await _context.SaveChangesAsync();
-
-            // Return the created order
             return order;
         }
+
 
 
 
