@@ -50,6 +50,7 @@ namespace AzureSqlConnectionDemo.Services
             // Ensure product lines are valid and products are linked
             foreach (var line in order.ProductLines)
             {
+                // Fetch the product from the database
                 var product = await _context.Products
                     .FirstOrDefaultAsync(p => p.Id == line.ProductId);
 
@@ -59,12 +60,19 @@ namespace AzureSqlConnectionDemo.Services
                 }
 
                 line.Product = product; // Assign the product to the order line
+
+                // Now you can safely access LineTotal
+                double lineTotal = line.LineTotal;
+
+                // Use the lineTotal value as needed, e.g., for adding to the total order cost
             }
 
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-            return order;
+            _context.Orders.Add(order); // Add the order to the context
+            await _context.SaveChangesAsync(); // Save the changes to the database
+            return order; // Return the created order
         }
+
+
 
 
 
