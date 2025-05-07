@@ -17,7 +17,10 @@ public class Order
     public List<OrderLine> ProductLines { get; set; } = new();
 
     [NotMapped]
-    public int TotalWeight => ProductLines.Sum(pl => pl.Product.WeightKg * pl.Quantity);
+    public int TotalWeight => ProductLines
+        .Where(pl => pl.Product != null) // Ensure Product is loaded
+        .Sum(pl => (pl.Product?.WeightKg ?? 0) * pl.Quantity);
+
 
     public OrderStatus Status { get; set; }
 

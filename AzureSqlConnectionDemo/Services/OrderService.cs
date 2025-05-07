@@ -60,19 +60,31 @@ namespace AzureSqlConnectionDemo.Services
                 }
 
                 line.Product = product; // Assign the product to the order line
-
-                // Now you can safely access LineTotal
-                double lineTotal = line.LineTotal;
-
-                // Use the lineTotal value as needed, e.g., for adding to the total order cost
             }
 
-            _context.Orders.Add(order); // Add the order to the context
-            await _context.SaveChangesAsync(); // Save the changes to the database
-            return order; // Return the created order
+            // Ensure shipment orders are valid and linked
+            foreach (var shipmentOrder in order.ShipmentOrders)
+            {
+                var shipment = await _context.Shipments
+                    .FirstOrDefaultAsync(s => s.Id == shipmentOrder.ShipmentId);
+
+                if (shipment == null)
+                {
+                    throw new Exception($"Shipment with ID {shipmentOrder.ShipmentId} not found.");
+                }
+
+                shipmentOrder.Shipment = shipment; // Assign the shipment to the shipment order
+            }
+
+            // Add the order to the context
+            _context.Orders.Add(order);
+
+            // Save the changes to the database
+            await _context.SaveChangesAsync();
+
+            // Return the created order
+            return order;
         }
-
-
 
 
 
