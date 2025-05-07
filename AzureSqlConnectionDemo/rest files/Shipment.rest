@@ -1,5 +1,5 @@
 ### Get all shipments
-GET http://localhost:5000/api/shipments
+GET http://localhost:5000/api/shipment
 
 ### Get shipment by ID
 GET http://localhost:5000/api/shipments/1
