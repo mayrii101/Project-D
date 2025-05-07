@@ -14,10 +14,10 @@ namespace AzureSqlConnectionDemo.Models
         public int DriverId { get; set; }
 
         // Remove [Required] here
-        public Vehicle Vehicle { get; set; } = default!;
+        public Vehicle? Vehicle { get; set; }
 
         // Remove [Required] here
-        public Employee Driver { get; set; } = default!;
+        public Employee? Driver { get; set; }
 
         public ShipmentStatus Status { get; set; }
 
@@ -41,12 +41,12 @@ namespace AzureSqlConnectionDemo.Models
         public int ShipmentId { get; set; }
 
         // Remove [Required] here
-        public Shipment Shipment { get; set; } = default!;
+        public Shipment? Shipment { get; set; }
 
         [Required]
         public int OrderId { get; set; }
 
         // Remove [Required] here
-        public Order Order { get; set; } = default!;
+        public Order? Order { get; set; }
     }
 }

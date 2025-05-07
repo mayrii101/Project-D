@@ -24,12 +24,20 @@ namespace AzureSqlConnectionDemo.Services
 
         public async Task<List<Shipment>> GetAllShipmentsAsync()
         {
-            return await _context.Shipments.Where(s => !s.IsDeleted).ToListAsync();
+            return await _context.Shipments
+                .Where(s => !s.IsDeleted)
+                .Include(s => s.ShipmentOrders)
+                    .ThenInclude(so => so.Order)
+                .ToListAsync();
         }
 
         public async Task<Shipment> GetShipmentByIdAsync(int id)
         {
-            return await _context.Shipments.Where(s => !s.IsDeleted).FirstOrDefaultAsync(s => s.Id == id);
+            return await _context.Shipments
+                .Where(s => !s.IsDeleted && s.Id == id)
+                .Include(s => s.ShipmentOrders)
+                    .ThenInclude(so => so.Order)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Shipment> CreateShipmentAsync(Shipment shipment)

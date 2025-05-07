@@ -13,14 +13,14 @@ namespace AzureSqlConnectionDemo.Models
 
         // Remove [Required] here
         [ForeignKey(nameof(OrderId))]
-        public Order Order { get; set; } = default!;
+        public Order? Order { get; set; }
 
         [Required]
         public int ProductId { get; set; }
 
         // Remove [Required] here
         [ForeignKey(nameof(ProductId))]
-        public Product Product { get; set; } = default!;
+        public Product? Product { get; set; }
 
         [Required, Range(1, int.MaxValue)]
         public int Quantity { get; set; }

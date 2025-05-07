@@ -7,7 +7,7 @@ namespace AzureSqlConnectionDemo.Models
         [Key]
         public int Id { get; set; }
 
-        [Required, StringLength(100)]
+        [StringLength(100)]
         public string ProductName { get; set; } = string.Empty;
 
         [StringLength(50)]
