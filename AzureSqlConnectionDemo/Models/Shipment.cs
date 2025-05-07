@@ -1,17 +1,22 @@
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System.ComponentModel.DataAnnotations;
+using AzureSqlConnectionDemo.Models;
 namespace AzureSqlConnectionDemo.Models
 {
     public class Shipment
     {
         public int Id { get; set; }
 
+        [Required]
         public int VehicleId { get; set; }
 
+        [Required]
         public int DriverId { get; set; }
 
+        // Remove [Required] here
         public Vehicle Vehicle { get; set; } = default!;
 
+        // Remove [Required] here
         public Employee Driver { get; set; } = default!;
 
         public ShipmentStatus Status { get; set; }
@@ -32,12 +37,16 @@ namespace AzureSqlConnectionDemo.Models
 
     public class ShipmentOrder
     {
+        [Required]
         public int ShipmentId { get; set; }
 
+        // Remove [Required] here
         public Shipment Shipment { get; set; } = default!;
 
+        [Required]
         public int OrderId { get; set; }
 
+        // Remove [Required] here
         public Order Order { get; set; } = default!;
     }
 }

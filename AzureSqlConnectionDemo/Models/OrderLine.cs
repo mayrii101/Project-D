@@ -11,12 +11,14 @@ namespace AzureSqlConnectionDemo.Models
         [Required]
         public int OrderId { get; set; }
 
+        // Remove [Required] here
         [ForeignKey(nameof(OrderId))]
         public Order Order { get; set; } = default!;
 
         [Required]
         public int ProductId { get; set; }
 
+        // Remove [Required] here
         [ForeignKey(nameof(ProductId))]
         public Product Product { get; set; } = default!;
 
@@ -26,7 +28,7 @@ namespace AzureSqlConnectionDemo.Models
         public bool IsDeleted { get; private set; } = false;
 
         [NotMapped]
-        public double LineTotal => Product.Price * Quantity;
+        public double LineTotal => (Product?.Price ?? 0) * Quantity;
 
         public void SoftDelete() => IsDeleted = true;
     }

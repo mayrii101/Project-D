@@ -11,6 +11,7 @@ namespace AzureSqlConnectionDemo.Models
         [Required]
         public int CustomerId { get; set; }
 
+        // Remove [Required] here
         [ForeignKey(nameof(CustomerId))]
         public Customer Customer { get; set; } = default!;
 
