@@ -1,0 +1,23 @@
+.graph-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  .graph-container h2 {
+    margin-bottom: 16px;
+    font-size: 1.25rem;
+    color: #333;
+  }
+  .small-graph {
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .section {
+    margin-bottom: 20px;
+  }

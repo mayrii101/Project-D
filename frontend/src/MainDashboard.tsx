@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./MainDashboard.css";
 import SearchBar from "./SearchBar";
 import Filter from "./Filter";
+import Graph from "./Graph"; // ✅ 1. Import Graph component
 
 interface Order {
   id: number;
@@ -78,6 +79,14 @@ const Dashboard: React.FC = () => {
     cancelled: filteredOrders.filter((o) => o.status.toLowerCase() === "cancelled").length,
   };
 
+  // ✅ 2. Graph data based on filtered orders
+  const graphData = [
+    { name: "Total", count: stats.total },
+    { name: "Delivered", count: stats.delivered },
+    { name: "Shipped", count: stats.inTransit },
+    { name: "Cancelled", count: stats.cancelled },
+  ];
+
   const handleFilterClick = (status?: string) => {
     setShowOrderDetails(true);
     if (status) {
@@ -99,7 +108,7 @@ const Dashboard: React.FC = () => {
   const closeModal = () => {
     setShowOrderDetails(false);
     setSelectedOrder(null);
-    setFilteredOrders(orders); // Reset naar alle orders
+    setFilteredOrders(orders);
   };
 
   return (
@@ -119,6 +128,9 @@ const Dashboard: React.FC = () => {
           <div className="loading">Loading data...</div>
         ) : (
           <>
+            {/* ✅ 3. Add Graph Component Here */}
+            <Graph data={graphData} />
+
             <div className="stats">
               <div className="card clickable" onClick={() => handleFilterClick()}>
                 <h3>Total Orders</h3>
