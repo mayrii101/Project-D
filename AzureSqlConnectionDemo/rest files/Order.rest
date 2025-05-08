@@ -9,20 +9,20 @@ POST http://localhost:5000/api/order
 Content-Type: application/json
 
 {
-  "customerId": 1,
+  "customerId": 2,
   "orderDate": "2025-04-25T16:59:39.174045",
   "deliveryAddress": "Deltaweg 88, Zeeland",
   "expectedDeliveryDate": "2025-04-30T16:59:39.174113",
-  "status": "Pending",
+  "status": "Delivered",
   "productLines": [
     {
       "productId": 1,
-      "quantity": 2
+      "quantity": 6
     }
   ],
   "shipmentOrders": [
     {
-      "shipmentId": 1
+      "shipmentId": 2
     }
   ]
 }
