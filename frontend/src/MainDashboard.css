@@ -1,320 +1,418 @@
+/* MainDashboard.css */
+
+:root {
+  /* Kleurenpalet gebaseerd op screenshot */
+  --header-bg: #1e2a38;
+  /* Donkerblauw/grijs voor header */
+  --header-text-primary: #ffffff;
+  --header-text-secondary: #d0d0d0;
+  /* Iets gedempter wit voor subtitel */
+
+  --primary-blue: #007bff;
+  /* Helderblauw voor de 'Updates' kaart */
+  --card-light-bg: #ffffff;
+  /* Witte achtergrond voor de meeste kaarten */
+  --card-text-light-bg: #2c3e50;
+  /* Donkere tekst voor op lichte kaarten */
+  --card-text-dark-bg: #ffffff;
+  /* Witte tekst voor op donkere (blauwe) kaarten */
+
+  --page-bg: #f4f7fa;
+  /* Zeer lichte grijs/blauwe achtergrond voor de pagina */
+  --card-shadow: rgba(0, 0, 0, 0.08);
+  --card-border-radius: 6px;
+
+  --font-family-sans-serif: Arial, Helvetica, sans-serif;
+  /* Overweeg een moderner webfont */
+
+  /* Standaard statuskleuren (kunnen verder verfijnd worden) */
+  --status-pending-bg: #f39c12;
+  --status-processing-bg: #3498db;
+  /* Kan ook var(--primary-blue) zijn */
+  --status-shipped-bg: #9b59b6;
+  /* De "Zendingen" kaart gebruikt dit niet direct */
+  --status-delivered-bg: #2ecc71;
+  --status-cancelled-bg: #e74c3c;
+  --status-text-color: #ffffff;
+
+  --border-color: #e9ecef;
+  /* Voor algemene randen zoals in modal of tabellen */
+  --text-color-muted: #6c757d;
+  /* Voor subtiele tekst */
+  --primary-color-rgb: 0, 123, 255;
+  /* RGB voor --primary-blue, voor rgba() box-shadow */
+}
+
+/* Globale reset en basisstijlen */
 body {
+  font-family: var(--font-family-sans-serif);
+  background-color: var(--page-bg);
   margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #000;
-  /* Ensures full page black */
+  color: var(--card-text-light-bg);
+  line-height: 1.6;
 }
 
 .dashboard {
-  background-color: #000;
-  color: white;
   min-height: 100vh;
-  width: 100vw;
-  /* Full viewport width */
-  overflow-x: hidden;
-  /* Prevents horizontal scroll */
 }
 
+/* Header Stijlen */
 .header {
-  background-color: #2d2d2d;
-  color: #aaa;
-  padding: 10px 20px;
-  font-size: 14px;
-  width: 100%;
+  background-color: var(--header-bg);
+  color: var(--header-text-primary);
+  padding: 20px 25px;
+  display: flex;
+  /* Voor eventuele items naast elkaar */
+  align-items: center;
 }
 
-.main {
-  background-color: #000;
-  padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  /* Centers content */
-}
-
-.banner {
-  background-color: #2f8f2f;
-  text-align: left;
-  padding: 16px 24px;
-  font-size: 28px;
-  font-weight: bold;
-  border-radius: 8px;
-  margin-bottom: 24px;
-  width: fit-content;
-  /* Makes banner only as wide as its content */
-  max-width: 100%;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin: 32px 0;
-}
-
-.card {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  font-weight: 500;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-  background-color: #444;
-}
-
-.details {
-  background-color: #1a1a1a;
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 24px;
-}
-
-.section h2 {
-  margin-bottom: 16px;
-  font-size: 20px;
-  color: #2f8f2f;
-  border-bottom: 1px solid #333;
-  padding-bottom: 8px;
-}
-
-.section p {
-  padding: 8px 0;
-  border-bottom: 1px solid #333;
+.header-logo-title h1 {
   margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--header-text-primary);
 }
 
-.section p:last-child {
-  border-bottom: none;
+.header-logo-title p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--header-text-secondary);
+  font-weight: 300;
 }
 
-.loading {
-  text-align: center;
-  padding: 40px;
-  color: #aaa;
-}
-
-.status {
-  float: right;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-}
-
-.status.pending {
-  background-color: #ffcc00;
-  color: #000;
-}
-
-.status.shipped {
-  background-color: #0099ff;
-  color: #fff;
-}
-
-.status.delivered {
-  background-color: #00cc66;
-  color: #fff;
-}
-
-.status.cancelled {
-  background-color: #ff3333;
-  color: #fff;
-}
-
-.status.processing {
-  background-color: #9966ff;
-  color: #fff;
+/* Hoofd content gebied */
+.main {
+  padding: 25px;
 }
 
 .dashboard-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
-.search-container input {
-  padding: 8px 12px;
-  border: 1px solid #444;
-  border-radius: 4px;
-  background-color: #333;
-  color: white;
-  width: 250px;
+.banner {
+  /* "Dashboard" titel boven de kaartenrij */
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--card-text-light-bg);
 }
-
-/* Keep all your existing styles below */
-
-/* Add these styles to your existing MainDashboard.css */
 
 .header-controls {
   display: flex;
+  gap: 15px;
+}
+
+/* Kaart Container */
+.dashboard-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+/* Algemene Kaartstijl */
+.card {
+  background-color: var(--card-light-bg);
+  /* Default achtergrond */
+  border-radius: var(--card-border-radius);
+  padding: 20px 25px;
+  box-shadow: 0 4px 10px var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  min-height: 170px;
+  /* Consistente hoogte */
+  text-decoration: none;
+  color: var(--card-text-light-bg);
+  /* Default tekstkleur */
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  position: relative;
+  /* Voor absolute positionering van iconen binnen de kaart */
+}
+
+.card.clickable:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 7px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0 auto 0;
+  /* Duwt titel naar boven, link naar onder */
+}
+
+.card-link {
+  display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 20px;
+  text-decoration: none;
+  color: inherit;
+  /* Erft kleur van parent .card */
 }
 
-/* Make sure the search bar and filter align properly */
-.search-container {
+.card-link .arrow {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.card-icon-top-right {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Specifieke Kaartstijlen */
+.card-updates {
+  background-color: var(--primary-blue);
+  color: var(--card-text-dark-bg);
+}
+
+.card-default {
+  background-color: var(--card-light-bg);
+  color: var(--card-text-light-bg);
+}
+
+/* Details sectie (onder de kaarten) */
+.details {
+  background-color: var(--card-light-bg);
+  border-radius: var(--card-border-radius);
+  padding: 25px;
+  box-shadow: 0 4px 10px var(--card-shadow);
+}
+
+.section h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--card-text-light-bg);
+  font-size: 1.3rem;
+}
+
+.section p.clickable {
+  /* Voor de order rijen */
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--border-color);
   margin: 0;
+  transition: background-color 0.2s;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .dashboard-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .header-controls {
-    width: 100%;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .search-container input,
-  .status-filter {
-    width: 100%;
-  }
+.section p.clickable:last-child {
+  border-bottom: none;
 }
 
+.section p.clickable:hover {
+  background-color: #f0f0f0;
+  /* Lichte hover voor klikbare rijen */
+}
+
+
+/* Status labels */
+.status {
+  padding: 5px 10px;
+  border-radius: 15px;
+  /* Meer afgerond voor pil-look */
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status.pending {
+  background-color: var(--status-pending-bg);
+  color: var(--status-text-color);
+}
+
+.status.processing {
+  background-color: var(--status-processing-bg);
+  color: var(--status-text-color);
+}
+
+.status.shipped {
+  background-color: var(--status-shipped-bg);
+  color: var(--status-text-color);
+}
+
+.status.delivered {
+  background-color: var(--status-delivered-bg);
+  color: var(--status-text-color);
+}
+
+.status.cancelled {
+  background-color: var(--status-cancelled-bg);
+  color: var(--status-text-color);
+}
+
+
+/* Modal Stijlen */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
-  /* donkere achtergrond */
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.65);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  /* Zorgt dat het bovenop alles ligt */
+  padding: 20px;
 }
 
 .modal {
-  background-color: #1a1a1a;
-  color: white;
-  padding: 24px;
-  border-radius: 12px;
-  width: 95%;
-  /* Maak de breedte groter */
-  max-width: 800px;
-  /* Verhoog de maximale breedte */
+  background-color: var(--card-light-bg);
+  border-radius: var(--card-border-radius);
+  width: 100%;
+  max-width: 700px;
+  /* Iets smaller voor betere leesbaarheid */
   max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
-
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  position: relative;
+  padding: 15px 25px;
+  border-bottom: 1px solid var(--border-color);
+  /* Geen sticky header meer nodig als modal niet te lang is, anders:
+  position: sticky; top: 0; background-color: var(--card-light-bg); z-index: 10; */
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: var(--card-text-light-bg);
+  font-size: 1.4rem;
 }
 
 .modal-header-buttons {
   display: flex;
-  gap: 12px;
-  align-items: center;
+  gap: 10px;
 }
 
+.close-button,
 .back-button {
-  background-color: #333;
+  background: none;
   border: none;
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 1.8rem;
+  /* Grotere iconen */
   cursor: pointer;
-  transition: all 0.2s ease;
-  padding: 0;
+  color: var(--text-color-muted);
+  padding: 5px;
+  line-height: 1;
+  transition: color 0.2s;
 }
 
+.close-button:hover,
 .back-button:hover {
-  background-color: #444;
-  transform: scale(1.05);
+  color: var(--primary-blue);
 }
 
 .back-button svg {
-  width: 20px;
-  height: 20px;
+  /* Zorgt dat SVG de kleur erft */
+  display: block;
 }
 
-.close-button {
-  background-color: #333;
-  border: none;
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 24px;
-  padding: 0;
-}
-
-.close-button:hover {
-  background-color: #ff3333;
-  transform: scale(1.05);
+.modal-content {
+  padding: 25px;
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
 .order-details {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #f0f0f0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  /* Responsive details */
+  gap: 15px 25px;
+  /* Row en column gap */
 }
 
 .detail-row {
-  display: flex;
+  margin-bottom: 8px;
+  /* Kleinere margin als onderdeel van grid */
+  font-size: 0.95rem;
 }
 
 .detail-label {
   font-weight: bold;
-  width: 160px;
-  flex-shrink: 0;
+  color: var(--text-color-muted);
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
 }
 
-.detail-value {
-  flex: 1;
+.all-orders {
+  /* Binnen de modal voor lijst van orders */
+  /* max-height: 60vh; Verplaatst naar modal-content met overflow */
 }
 
-.orders-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  /* of 16px voor iets meer ruimte */
-  margin-top: 16px;
-}
-
-.order-summary {
+.orders-list .order-summary {
+  /* Specifiek voor lijst in modal */
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  background-color: #1f1f1f;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s;
 }
 
-.order-summary:hover {
-  background-color: #2a2a2a;
+.orders-list .order-summary:last-child {
+  border-bottom: none;
+}
+
+.orders-list .order-summary.clickable:hover {
+  background-color: #f0f0f0;
+}
+
+
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-color-muted);
+  font-size: 1.1rem;
+}
+
+/* SearchBar.css stijlen (kunnen hier geïntegreerd worden of apart blijven) */
+/* Als je SearchBar.css apart houdt, zorg dan dat het var() gebruikt voor consistentie */
+.search-container input {
+  /* Voorbeeld, pas aan naar je SearchBar structuur */
+  padding: 10px 15px;
+  border-radius: var(--card-border-radius);
+  border: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  min-width: 220px;
+  /* Minimale breedte */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-container input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-color-rgb), 0.25);
+}
+
+/* Filter.css stijlen (vergelijkbaar) */
+.filter-container select {
+  /* Voorbeeld */
+  padding: 10px 15px;
+  border-radius: var(--card-border-radius);
+  border: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  min-width: 180px;
+}
+
+.filter-container select:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-color-rgb), 0.25);
 }

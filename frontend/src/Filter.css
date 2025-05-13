@@ -1,41 +1,19 @@
 /* Filter.css */
 .filter-wrapper {
     position: relative;
-    display: inline-block;
 }
 
 .status-filter {
-    padding: 8px 32px 8px 12px;
-    border: 1px solid #444;
+    padding: 8px 12px;
     border-radius: 4px;
-    background-color: #333;
-    color: white;
-    font-size: 14px;
+    border: 1px solid #bdc3c7;
+    background-color: white;
+    color: #2c3e50;
+    font-size: 0.9rem;
     cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    transition: all 0.2s ease;
-    min-width: 180px;
-}
-
-.status-filter:hover {
-    border-color: #666;
 }
 
 .status-filter:focus {
     outline: none;
-    border-color: #2f8f2f;
-}
-
-/* Custom dropdown arrow */
-.filter-wrapper::after {
-    content: "▼";
-    font-size: 10px;
-    color: #aaa;
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
+    border-color: #3498db;
 }

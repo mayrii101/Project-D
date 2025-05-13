@@ -58,9 +58,13 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     const filtered = orders.filter((order) => {
+      const lowerSearch = searchTerm.toLowerCase();
+
       const matchesSearch =
         order.id.toString().includes(searchTerm) ||
-        order.status.toLowerCase().includes(searchTerm.toLowerCase());
+        order.status.toLowerCase().includes(lowerSearch) ||
+        order.customer.bedrijfsNaam.toLowerCase().includes(lowerSearch) ||
+        order.customer.email.toLowerCase().includes(lowerSearch);
 
       const matchesStatus =
         !selectedStatus ||
@@ -68,7 +72,14 @@ const Dashboard: React.FC = () => {
 
       return matchesSearch && matchesStatus;
     });
-    setFilteredOrders(filtered);
+
+    // Sorteren op orderdatum, nieuwste eerst
+    const sorted = [...filtered].sort(
+      (a, b) =>
+        new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
+    );
+
+    setFilteredOrders(sorted);
   }, [searchTerm, orders, selectedStatus]);
 
   const stats = {
@@ -99,12 +110,12 @@ const Dashboard: React.FC = () => {
   const closeModal = () => {
     setShowOrderDetails(false);
     setSelectedOrder(null);
-    setFilteredOrders(orders); // Reset naar alle orders
+    setFilteredOrders(orders);
   };
 
   return (
     <div className="dashboard">
-      <header className="header">Database (Admin View)</header>
+      <header className="header">Lafeber</header>
 
       <div className="main">
         <div className="dashboard-header">
@@ -141,14 +152,18 @@ const Dashboard: React.FC = () => {
             <div className="details">
               <div className="section">
                 <h2>Recent Orders</h2>
-                {filteredOrders.slice(0, 5).map((o) => (
-                  <p key={o.id} onClick={() => handleOrderClick(o)} className="clickable">
-                    <span>Order #{o.id}</span>
-                    <span className={`status ${o.status.toLowerCase()}`}>
-                      {o.status}
-                    </span>
-                  </p>
-                ))}
+                {filteredOrders.length === 0 ? (
+                  <p>Geen resultaten gevonden.</p>
+                ) : (
+                  filteredOrders.slice(0, 5).map((o) => (
+                    <p key={o.id} onClick={() => handleOrderClick(o)} className="clickable">
+                      <span>Order #{o.id}</span>
+                      <span className={`status ${o.status.toLowerCase()}`}>
+                        {o.status}
+                      </span>
+                    </p>
+                  ))
+                )}
               </div>
             </div>
           </>
@@ -167,20 +182,10 @@ const Dashboard: React.FC = () => {
               <div className="modal-header-buttons">
                 {selectedOrder && (
                   <button className="back-button" onClick={() => setSelectedOrder(null)}>
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M15 18L9 12L15 6"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M15 18L9 12L15 6" stroke="currentColor"
+                        strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
                 )}
