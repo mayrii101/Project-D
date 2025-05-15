@@ -421,3 +421,90 @@ AzureSqlConnection*
 *.pdb
 *.cache
 *.props
+
+# Ignore all bin and obj folders recursively
+**/[Bb]in/
+**/[Oo]bj/
+
+# Common config or local settings files
+appsettings.*.json
+!appsettings.json
+.env
+.env.*
+
+# Node.js
+**/node_modules/
+
+# Yarn / npm logs
+yarn-error.log
+npm-debug.log
+pnpm-debug.log
+
+# Temporary VS output folders
+**/out/
+**/build/
+
+# VS Code cache and backup
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+
+# IDE auto-save or temp files
+*.tmp
+*.temp
+*.bak
+*.old
+*~
+~$*
+
+# Ignore database files
+*.sqlite
+*.db
+*.db3
+*.mdb
+
+# Ignore coverage output
+coverage/
+lcov-report/
+
+# Ignore bin and obj folders across all projects
+**/bin/
+**/obj/
+
+# Ignore database script temp files
+*.sql
+
+# Ignore user secrets and local config
+appsettings.*.json
+!appsettings.json
+
+# Ignore Visual Studio stuff
+.vs/
+*.user
+*.suo
+
+# Ignore build results
+build/
+out/
+dist/
+
+# Ignore Node.js dependencies and frontend builds
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.vite/
+
+# Ignore logs and temp files
+*.log
+*.tmp
+*.bak
+*.old
+*.cache
+*.db
+
+# VS Code settings
+.vscode/
+.history/
+
