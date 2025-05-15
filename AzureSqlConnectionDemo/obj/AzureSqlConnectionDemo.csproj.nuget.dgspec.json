@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\no1al\\OneDrive\\Documenten\\GitHub\\Project-D\\azuresqlconnectiondemo\\AzureSqlConnectionDemo.csproj": {}
+    "C:\\Users\\no1al\\OneDrive\\Documenten\\GitHub\\Project-D\\AzureSqlConnectionDemo\\AzureSqlConnectionDemo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\no1al\\OneDrive\\Documenten\\GitHub\\Project-D\\azuresqlconnectiondemo\\AzureSqlConnectionDemo.csproj": {
+    "C:\\Users\\no1al\\OneDrive\\Documenten\\GitHub\\Project-D\\AzureSqlConnectionDemo\\AzureSqlConnectionDemo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\no1al\\OneDrive\\Documenten\\GitHub\\Project-D\\azuresqlconnectiondemo\\AzureSqlConnectionDemo.csproj",
+        "projectUniqueName": "C:\\Users\\no1al\\OneDrive\\Documenten\\GitHub\\Project-D\\AzureSqlConnectionDemo\\AzureSqlConnectionDemo.csproj",
         "projectName": "AzureSqlConnectionDemo",
-        "projectPath": "C:\\Users\\no1al\\OneDrive\\Documenten\\GitHub\\Project-D\\azuresqlconnectiondemo\\AzureSqlConnectionDemo.csproj",
+        "projectPath": "C:\\Users\\no1al\\OneDrive\\Documenten\\GitHub\\Project-D\\AzureSqlConnectionDemo\\AzureSqlConnectionDemo.csproj",
         "packagesPath": "C:\\Users\\no1al\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\no1al\\OneDrive\\Documenten\\GitHub\\Project-D\\azuresqlconnectiondemo\\obj\\",
+        "outputPath": "C:\\Users\\no1al\\OneDrive\\Documenten\\GitHub\\Project-D\\AzureSqlConnectionDemo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\no1al\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,11 +53,15 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.4, )"
+              "version": "[9.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[9.0.4, )"
+              "version": "[9.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -67,11 +71,15 @@
             },
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
-              "version": "[9.0.4, )"
+              "version": "[9.0.5, )"
             },
             "MySqlConnector": {
               "target": "Package",
               "version": "[2.4.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -80,6 +88,10 @@
             "linq2db.SqlServer.MS": {
               "target": "Package",
               "version": "[5.4.1, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.3, )"
             }
           },
           "imports": [
